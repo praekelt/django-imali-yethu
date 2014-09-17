@@ -1,0 +1,15 @@
+Django<1.7
+South
+gunicorn
+raven
+nose
+django-nose
+psycopg2
+celery
+redis
+django-debug-toolbar
+django-celery
+django-celery-email
+pep8
+pyflakes
+fabric
