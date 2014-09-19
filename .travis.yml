@@ -1,6 +1,6 @@
 language: python
 env:
-  - DATABASE_URL='sqlite://:memory:'
+  - DATABASE_URL='postgres://postgres:/imaliyethu'
 python:
   - "2.6"
   - "2.7"
