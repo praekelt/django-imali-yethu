@@ -4,6 +4,7 @@ gunicorn
 raven
 nose
 django-nose
+coverage
 psycopg2
 celery
 redis
