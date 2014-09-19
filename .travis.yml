@@ -1,6 +1,6 @@
 language: python
 env:
-  - DATABASE_URL='postgres://postgres:@/test_imaliyethu'
+  - DJANGO_SETTINGS_MODULE='imaliyethu.testsettings' DATABASE_URL='postgres://postgres:@/test_imaliyethu'
 python:
   - "2.6"
   - "2.7"
