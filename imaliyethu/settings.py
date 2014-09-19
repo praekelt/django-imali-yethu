@@ -139,6 +139,7 @@ INSTALLED_APPS = (
     'djcelery',
     'djcelery_email',
     'debug_toolbar',
+    'imaliyethu.api',
 )
 
 # A sample logging configuration. The only tangible logging
