@@ -10,6 +10,7 @@ redis
 django-debug-toolbar
 django-celery
 django-celery-email
+dj-database-url
 pep8
 pyflakes
 fabric

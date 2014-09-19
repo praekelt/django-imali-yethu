@@ -2,6 +2,7 @@
 
 import os
 import djcelery
+import dj_database_url
 
 
 djcelery.setup_loader()
@@ -23,14 +24,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'imaliyethu',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-    }
+    'default': dj_database_url.config(default='postgres:///imaliyethu'),
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
