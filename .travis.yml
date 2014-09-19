@@ -1,0 +1,13 @@
+language: python
+env:
+  - DJANGO_SETTINGS_MODULE='imaliyethu.testsettings' DATABASE_URL='postgres://postgres:@/test_imaliyethu'
+python:
+  - "2.6"
+  - "2.7"
+install:
+  - pip install -r requirements.txt
+before_script:
+  - psql -c 'create database test_imaliyethu;' -U postgres
+script:
+  - flake8 imaliyethu
+  - ./manage.py test
