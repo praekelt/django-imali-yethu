@@ -85,7 +85,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -96,7 +96,7 @@ SECRET_KEY = None
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    # 'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -115,7 +115,7 @@ ROOT_URLCONF = 'skeleton.urls'
 WSGI_APPLICATION = 'skeleton.wsgi.application'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Put strings here, like "/home/html/django_templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     abspath('templates'),
@@ -195,12 +195,14 @@ DEBUG_TOOLBAR_CONFIG = {
 
 # South configuration variables
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-SKIP_SOUTH_TESTS = True     # Do not run the south tests as part of our
-                            # test suite.
-SOUTH_TESTS_MIGRATE = False  # Do not run the migrations for our tests.
-                             # We are assuming that our models.py are correct
-                             # for the tests and as such nothing needs to be
-                             # migrated.
+# Do not run the south tests as part of our test suite.
+SKIP_SOUTH_TESTS = True
+# Do not run the migrations for our tests.
+# We are assuming that our models.py are correct
+# for the tests and as such nothing needs to be
+# migrated.
+
+SOUTH_TESTS_MIGRATE = False
 
 # Sentry configuration
 RAVEN_CONFIG = {
@@ -209,6 +211,6 @@ RAVEN_CONFIG = {
 }
 
 try:
-    from local_settings import *
+    from local_settings import *  # flake8: noqa
 except ImportError:
     pass
