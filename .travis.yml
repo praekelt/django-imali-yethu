@@ -1,4 +1,6 @@
 language: python
+env:
+  - DATABASE_URL='sqlite://:memory:'
 python:
   - "2.6"
   - "2.7"
