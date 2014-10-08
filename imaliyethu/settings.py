@@ -1,4 +1,4 @@
-# Django settings for skeleton project.
+# Django settings for Imali Yethu
 
 import os
 import djcelery
@@ -109,10 +109,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'skeleton.urls'
+ROOT_URLCONF = 'imaliyethu.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'skeleton.wsgi.application'
+WSGI_APPLICATION = 'imaliyethu.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates".
@@ -128,10 +128,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
     'south',
     'gunicorn',
     'django_nose',
@@ -139,6 +136,7 @@ INSTALLED_APPS = (
     'djcelery',
     'djcelery_email',
     'debug_toolbar',
+    'imaliyethu.toilet_issues',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -179,7 +177,7 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 # CELERY_ALWAYS_EAGER = DEBUG
 
 # Tell Celery where to find the tasks
-CELERY_IMPORTS = ('celery_app.tasks',)
+# CELERY_IMPORTS = ('celery_app.tasks',)
 
 # Defer email sending to Celery, except if we're in debug mode,
 # then just print the emails to stdout for debugging.
