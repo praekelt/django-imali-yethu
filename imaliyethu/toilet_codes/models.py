@@ -24,14 +24,12 @@ class ToiletCode(models.Model):
 
         Uses :class:`difflib.SequenceMatcher` and :mod:`heapq`.
         """
-        results = []
-        for code in cls.objects.all():
-            s = SequenceMatcher(a=query, b=code.code)
-            if s.real_quick_ratio() < threshold:
-                continue
-            item = (s.ratio(), code)
-            if len(results) < max_results:
-                heapq.heappush(results, item)
-            else:
-                heapq.heappushpop(results, item)
-        return results
+        matchers = (
+            (code, SequenceMatcher(a=query, b=code.code))
+            for code in cls.objects.all())
+        results = heapq.nlargest(max_results, (
+            (seq.ratio(), code.code, code)
+            for code, seq in matchers
+            if seq.real_quick_ratio() > threshold and seq.ratio() > threshold
+        ))
+        return [(ratio, code) for ratio, _, code in results]
