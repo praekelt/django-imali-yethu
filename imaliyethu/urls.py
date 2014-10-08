@@ -8,4 +8,5 @@ urlpatterns = patterns(
     '',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^toilet_issues/', include('imaliyethu.toilet_issues.urls')),
+    url(r'^toilet_codes/', include('imaliyethu.toilet_codes.urls')),
 )
