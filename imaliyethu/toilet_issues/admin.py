@@ -13,9 +13,9 @@ class ToiletIssueTranslationInline(admin.TabularInline):
 def display_translation(lang_code, lang_label):
     """ Construct a function for displaying a column of translations. """
     def display(issue):
-        for trans in issue.translations.all():
-            if trans.language == lang_code:
-                return trans.description
+        translations = issue.translations.filter(language=lang_code)
+        if translations:
+            return translations[0].description
         return None
     display.short_description = lang_label
     return display
