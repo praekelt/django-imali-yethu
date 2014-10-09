@@ -74,6 +74,23 @@ class ApiSearchViewTests(TestCase):
             [serialize_code(self.codes[3])],
         )
 
+    def test_error(self):
+        response = self.client.get(
+            reverse('toilet_codes_search'))
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data, {
+            'error': 'No query specified.',
+        })
+
+    def test_multiple_errors(self):
+        response = self.client.get(
+            reverse('toilet_codes_search') + '?threshold=foo')
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data, {
+            'error': ('No query specified.'
+                      ' Value of threshold should be a float.'),
+        })
+
 
 class ApiListViewTests(TestCase):
     def setUp(self):
