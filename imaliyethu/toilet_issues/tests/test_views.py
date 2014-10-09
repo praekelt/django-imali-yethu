@@ -1,7 +1,5 @@
 """ Tests for toilet issue views. """
 
-import json
-
 from django.core.urlresolvers import reverse
 from django.test import Client, TestCase
 
