@@ -137,6 +137,7 @@ INSTALLED_APPS = (
     'djcelery_email',
     'debug_toolbar',
     'imaliyethu.toilet_issues',
+    'imaliyethu.toilet_codes',
 )
 
 # A sample logging configuration. The only tangible logging
