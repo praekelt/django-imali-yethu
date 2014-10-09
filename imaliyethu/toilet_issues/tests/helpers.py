@@ -12,17 +12,26 @@ def create_issue(value, **translations):
     return issue
 
 
+def canonicalize_issue(data):
+    """ Sort the translations listed in an issue for ease of comparison """
+    if isinstance(data, dict):
+        if 'translations' in data:
+            data['translations'].sort(key=lambda x: x['id'])
+        return data
+    return [canonicalize_issue(i) for i in sorted(data, key=lambda x: x['id'])]
+
+
 def serialize_issue(*args):
     """ Hand-serialize an issue for comparison with the real thing. """
     if len(args) == 1:
         issue = args[0]
-        return {
+        return canonicalize_issue({
             'id': issue.pk,
             'value': issue.value,
             'translations': serialize_translation(*issue.translations.all())
-        }
+        })
     else:
-        return [serialize_issue(i) for i in sorted(args, key=lambda x: x.pk)]
+        return canonicalize_issue([serialize_issue(i) for i in args])
 
 
 def serialize_translation(*args):
@@ -36,5 +45,4 @@ def serialize_translation(*args):
             'description': trans.description,
         }
     else:
-        return [serialize_translation(t)
-                for t in sorted(args, key=lambda x: x.pk)]
+        return [serialize_translation(t) for t in args]

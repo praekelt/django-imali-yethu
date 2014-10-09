@@ -3,7 +3,7 @@
 from django.core.urlresolvers import reverse
 from django.test import Client, TestCase
 
-from .helpers import create_issue, serialize_issue
+from .helpers import create_issue, serialize_issue, canonicalize_issue
 
 
 class ApiListViewTests(TestCase):
@@ -15,7 +15,9 @@ class ApiListViewTests(TestCase):
         issue_2 = create_issue("leaking_toilet", en="Leaking Toilet", xh="Bar")
         response = self.client.get(reverse('toilet_issues_list'))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data, serialize_issue(issue_1, issue_2))
+        self.assertEqual(
+            canonicalize_issue(response.data),
+            serialize_issue(issue_1, issue_2))
 
 
 class ApiDetailViewTests(TestCase):
@@ -27,4 +29,5 @@ class ApiDetailViewTests(TestCase):
         response = self.client.get(
             reverse('toilet_issues_detail', kwargs={'pk': issue.pk}))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data, serialize_issue(issue))
+        self.assertEqual(
+            canonicalize_issue(response.data), serialize_issue(issue))

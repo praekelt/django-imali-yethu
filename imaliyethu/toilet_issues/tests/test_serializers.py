@@ -4,14 +4,15 @@ from django.test import TestCase
 
 from imaliyethu.toilet_issues.serializers import ToiletIssueSerializer
 
-from .helpers import create_issue, serialize_issue
+from .helpers import create_issue, serialize_issue, canonicalize_issue
 
 
 class ToiletIssueSerializerTests(TestCase):
     def test_serialize(self):
         issue = create_issue("leaking_toilet", en="Leaking Toilet", xh="Foo")
         serializer = ToiletIssueSerializer(issue)
-        self.assertEqual(serializer.data, serialize_issue(issue))
+        self.assertEqual(
+            canonicalize_issue(serializer.data), serialize_issue(issue))
 
     def test_deserialize(self):
         issue = create_issue("leaking_toilet", en="Leaking Toilet", xh="Foo")
