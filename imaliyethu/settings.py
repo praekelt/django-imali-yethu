@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'imaliyethu.toilet_issues',
     'imaliyethu.toilet_codes',
+    'snappybouncer',
 )
 
 # A sample logging configuration. The only tangible logging

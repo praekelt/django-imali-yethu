@@ -5,6 +5,7 @@ python:
   - "2.6"
   - "2.7"
 install:
+  - "pip install git+https://github.com/westerncapelabs/django-snappy-vumi-bouncer.git@feature/issue-1-basic-implementation"
   - pip install -r requirements.txt
   - pip install coveralls
 before_script:
