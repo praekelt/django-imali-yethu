@@ -3,7 +3,41 @@
 from django.core.urlresolvers import reverse
 from django.test import Client, TestCase
 
+from imaliyethu.toilet_codes.views import SearchParams
+
 from .helpers import create_code, serialize_code, canonicalize_code
+
+
+class SearchParamsTests(TestCase):
+    def test_defaults(self):
+        s = SearchParams({'query': 'foo'})
+        self.assertEqual(s.errors, [])
+        self.assertEqual(s.query, 'foo')
+        self.assertEqual(s.threshold, 0.6)
+        self.assertEqual(s.max_results, 5)
+
+    def test_no_query(self):
+        s = SearchParams({})
+        self.assertEqual(s.errors, ["No query specified."])
+
+    def test_non_float_threshold(self):
+        s = SearchParams({'query': 'foo', 'threshold': 'b'})
+        self.assertEqual(s.errors, ["Value of threshold should be a float."])
+
+    def test_threshold_underflow(self):
+        s = SearchParams({'query': 'foo', 'threshold': '-5.0'})
+        self.assertEqual(s.errors, [])
+        self.assertEqual(s.threshold, 0.0)
+
+    def test_non_integer_max_results(self):
+        s = SearchParams({'query': 'foo', 'max_results': 'b'})
+        self.assertEqual(
+            s.errors, ["Value of max_results should be an integer."])
+
+    def test_max_results_underflow(self):
+        s = SearchParams({'query': 'foo', 'max_results': '-3'})
+        self.assertEqual(s.errors, [])
+        self.assertEqual(s.max_results, 0)
 
 
 class ApiSearchViewTests(TestCase):
