@@ -19,6 +19,13 @@ class ApiListViewTests(TestCase):
             canonicalize_issue(response.data),
             serialize_issue(issue_1, issue_2))
 
+    def test_unauthenticated_post_fails(self):
+        response = self.client.post(reverse('toilet_codes_search'))
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.data, {
+            'detail': 'Authentication credentials were not provided.',
+        })
+
 
 class ApiDetailViewTests(TestCase):
     def setUp(self):
@@ -31,3 +38,10 @@ class ApiDetailViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             canonicalize_issue(response.data), serialize_issue(issue))
+
+    def test_unauthenticated_post_fails(self):
+        response = self.client.post(reverse('toilet_codes_search'))
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.data, {
+            'detail': 'Authentication credentials were not provided.',
+        })

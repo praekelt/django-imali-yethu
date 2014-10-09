@@ -91,6 +91,13 @@ class ApiSearchViewTests(TestCase):
                       ' Value of threshold should be a float.'),
         })
 
+    def test_unauthenticated_post_fails(self):
+        response = self.client.post(reverse('toilet_codes_search'))
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.data, {
+            'detail': 'Authentication credentials were not provided.',
+        })
+
 
 class ApiListViewTests(TestCase):
     def setUp(self):
@@ -105,6 +112,13 @@ class ApiListViewTests(TestCase):
             canonicalize_code(response.data),
             serialize_code(code_1, code_2))
 
+    def test_unauthenticated_post_fails(self):
+        response = self.client.post(reverse('toilet_codes_list'))
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.data, {
+            'detail': 'Authentication credentials were not provided.',
+        })
+
 
 class ApiDetailViewTests(TestCase):
     def setUp(self):
@@ -117,3 +131,12 @@ class ApiDetailViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             canonicalize_code(response.data), serialize_code(code))
+
+    def test_unauthenticated_post_fails(self):
+        code = create_code("TM123", lat=12.0, lon=-1.0)
+        response = self.client.post(
+            reverse('toilet_codes_detail', kwargs={'pk': code.pk}))
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.data, {
+            'detail': 'Authentication credentials were not provided.',
+        })
