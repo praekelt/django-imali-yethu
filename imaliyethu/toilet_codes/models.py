@@ -10,10 +10,33 @@ from django.db import models
 class ToiletCode(models.Model):
     """ A model representing a toilet code. """
 
+    TOILET_TYPE_CHOICES = (
+        ("FT", _("Flush toilet")),
+        ("TA", _("Tap")),
+        ("SP", _("Stand pipe")),
+    )
+
     code = models.CharField(max_length=32, help_text=_("Toilet code"))
 
     lat = models.FloatField(help_text=_("Latitude of the toilet"))
     lon = models.FloatField(help_text=_("Longitude of the toilet"))
+
+    section = models.CharField(
+        max_length=32,
+        help_text=_("Community section"))
+
+    section_number = models.CharField(
+        max_length=32,
+        help_text=_("Number within section"))
+
+    cluster = models.CharField(
+        max_length=32,
+        help_text=_("Cluster within section"))
+
+    toilet_type = models.CharField(
+        choices=TOILET_TYPE_CHOICES,
+        max_length=32,
+        help_text=_("Toilet type"))
 
     def __unicode__(self):
         return unicode(self.code)
