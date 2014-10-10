@@ -3,6 +3,7 @@
 from rest_framework.generics import (
     ListCreateAPIView, RetrieveUpdateDestroyAPIView)
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -38,6 +39,8 @@ class SearchParams(object):
 class ToiletCodeSearch(APIView):
     """ API endpoint for searching for toilet codes. """
 
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
     def get(self, request, format=None):
         params = SearchParams(request.GET)
         if params.errors:
@@ -54,12 +57,16 @@ class ToiletCodeSearch(APIView):
 class ToiletCodeList(ListCreateAPIView):
     """ API endpoint for searching for listing toilet codes. """
 
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
     queryset = ToiletCode.objects.all()
     serializer_class = ToiletCodeSerializer
 
 
 class ToiletCodeDetail(RetrieveUpdateDestroyAPIView):
     """ API endpoint for retrieving, updating and deleting a toilet issue. """
+
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     queryset = ToiletCode.objects.all()
     serializer_class = ToiletCodeSerializer
