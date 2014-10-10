@@ -49,7 +49,7 @@ class ToiletCodeSearch(APIView):
         results = ToiletCode.nearest(
             params.query, threshold=params.threshold,
             max_results=params.max_results)
-        codes = [r[1] for r in results]
+        codes = [code for _ratio, code in results]
         serializer = ToiletCodeSerializer(codes, many=True)
         return Response(serializer.data)
 
