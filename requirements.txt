@@ -1,5 +1,6 @@
 Django<1.7
 South
+djangorestframework
 gunicorn
 raven
 nose
