@@ -22,20 +22,20 @@ class ToiletCode(models.Model):
     lon = models.FloatField(help_text=_("Longitude of the toilet"))
 
     section = models.CharField(
-        max_length=32,
+        max_length=32, blank=True,
         help_text=_("Community section"))
 
     section_number = models.CharField(
-        max_length=32,
+        max_length=32, blank=True,
         help_text=_("Number within section"))
 
     cluster = models.CharField(
-        max_length=32,
+        max_length=32, blank=True,
         help_text=_("Cluster within section"))
 
     toilet_type = models.CharField(
         choices=TOILET_TYPE_CHOICES,
-        max_length=32,
+        max_length=32, blank=True,
         help_text=_("Toilet type"))
 
     def __unicode__(self):
