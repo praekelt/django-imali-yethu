@@ -8,4 +8,8 @@ from imaliyethu.toilet_codes.models import ToiletCode
 class ToiletCodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ToiletCode
-        fields = ('id', 'code', 'lat', 'lon')
+        fields = (
+            'id', 'code', 'lat', 'lon',
+            'section', 'section_number', 'cluster',
+            'toilet_type',
+        )
