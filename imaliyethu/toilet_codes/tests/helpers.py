@@ -3,9 +3,9 @@
 from imaliyethu.toilet_codes.models import ToiletCode
 
 
-def create_code(code, lat=0.0, lon=0.0):
+def create_code(code, lat=0.0, lon=0.0, **kw):
     """ Create a toilet issue with translations. """
-    return ToiletCode.objects.create(code=code, lat=lat, lon=lon)
+    return ToiletCode.objects.create(code=code, lat=lat, lon=lon, **kw)
 
 
 def canonicalize_code(data):
@@ -20,10 +20,10 @@ def serialize_code(*args):
     if len(args) == 1:
         code = args[0]
         return canonicalize_code({
-            'id': code.pk,
-            'code': code.code,
-            'lat': code.lat,
-            'lon': code.lon,
+            'id': code.pk, 'code': code.code,
+            'lat': code.lat, 'lon': code.lon,
+            'section': code.section, 'section_number': code.section_number,
+            'cluster': code.cluster, 'toilet_type': code.toilet_type,
         })
     else:
         return canonicalize_code([serialize_code(c) for c in args])
