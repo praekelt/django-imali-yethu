@@ -11,4 +11,5 @@ urlpatterns = patterns(
     url(r'^toilet_codes/', include('imaliyethu.toilet_codes.urls')),
     url(r'^api-auth/', include(
         'rest_framework.urls', namespace='rest_framework')),
+    url(r'^', include('snappybouncer.urls')),
 )
