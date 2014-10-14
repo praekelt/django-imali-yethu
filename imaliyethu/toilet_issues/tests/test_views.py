@@ -19,6 +19,15 @@ class ApiListViewTests(TestCase):
             canonicalize_issue(response.data),
             serialize_issue(issue_1, issue_2))
 
+    def test_list_issues_in_order(self):
+        order = list(range(10, 1, -1))
+        for i in order:
+            create_issue("issue_%d" % i, order=i)
+        response = self.client.get(reverse('toilet_issues_list'))
+        self.assertEqual(
+            [issue['value'] for issue in response.data],
+            ['issue_%d' % i for i in sorted(order)])
+
     def test_unauthenticated_post_fails(self):
         response = self.client.post(reverse('toilet_codes_search'))
         self.assertEqual(response.status_code, 403)

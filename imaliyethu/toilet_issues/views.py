@@ -13,7 +13,7 @@ class ToiletIssueList(ListCreateAPIView):
 
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
-    queryset = ToiletIssue.objects.all()
+    queryset = ToiletIssue.objects.all().order_by('order')
     serializer_class = ToiletIssueSerializer
 
 
