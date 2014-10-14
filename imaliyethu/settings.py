@@ -136,6 +136,8 @@ INSTALLED_APPS = (
     'djcelery',
     'djcelery_email',
     'debug_toolbar',
+    'rest_framework',
+    'ordered_model',
     'imaliyethu.toilet_issues',
     'imaliyethu.toilet_codes',
     'snappybouncer',
@@ -189,7 +191,6 @@ if DEBUG:
 
 # Django debug toolbar
 DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
     'ENABLE_STACKTRACES': True,
 }
 

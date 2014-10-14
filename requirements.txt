@@ -1,5 +1,7 @@
 Django<1.7
 South
+djangorestframework
+django-ordered-model
 gunicorn
 raven
 nose
