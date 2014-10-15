@@ -74,7 +74,8 @@ class ToiletCodeCsv(object):
 
     def write_csv(self, file_obj):
         writer = csv.DictWriter(file_obj, self._csv_fields)
-        writer.writeheader()
+        # Python 2.6 DictWriter has no .writeheader()
+        writer.writerow(dict(zip(self._csv_fields, self._csv_fields)))
         for obj in self.model.objects.all():
             writer.writerow(self.model_to_data(obj))
 
