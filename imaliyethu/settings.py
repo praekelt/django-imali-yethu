@@ -137,8 +137,11 @@ INSTALLED_APPS = (
     'djcelery_email',
     'debug_toolbar',
     'rest_framework',
+    'ordered_model',
     'imaliyethu.toilet_issues',
     'imaliyethu.toilet_codes',
+    'snappybouncer',
+    'tastypie',  # needed by snappybouncer
 )
 
 # A sample logging configuration. The only tangible logging

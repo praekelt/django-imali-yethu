@@ -3,9 +3,9 @@
 from imaliyethu.toilet_issues.models import ToiletIssue, ToiletIssueTranslation
 
 
-def create_issue(value, **translations):
+def create_issue(value, order=None, **translations):
     """ Create a toilet issue with translations. """
-    issue = ToiletIssue.objects.create(value=value)
+    issue = ToiletIssue.objects.create(value=value, order=order)
     for language, description in translations.items():
         issue.translations.add(
             ToiletIssueTranslation(language=language, description=description))

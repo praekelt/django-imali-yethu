@@ -3,12 +3,17 @@
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
+from ordered_model.models import OrderedModel
 
-class ToiletIssue(models.Model):
+
+class ToiletIssue(OrderedModel):
     """ A model representing a common problem with a toilet. """
     value = models.CharField(
         max_length=1024,
         help_text=_("Value to store in the report."))
+
+    class Meta(OrderedModel.Meta):
+        pass
 
     def __unicode__(self):
         return unicode(self.value)

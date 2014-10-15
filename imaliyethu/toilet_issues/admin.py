@@ -2,6 +2,8 @@
 
 from django.contrib import admin
 
+from ordered_model.admin import OrderedModelAdmin
+
 from imaliyethu.toilet_issues.models import ToiletIssue, ToiletIssueTranslation
 
 
@@ -21,13 +23,13 @@ def display_translation(lang_code, lang_label):
     return display
 
 
-class ToiletIssueAdmin(admin.ModelAdmin):
+class ToiletIssueAdmin(OrderedModelAdmin):
     inlines = (
         ToiletIssueTranslationInline,
     )
     list_select_related = True
     list_display = (
-        'value',
+        'value', 'move_up_down_links',
     ) + tuple(
         display_translation(lang, label)
         for lang, label in ToiletIssueTranslation.LANGUAGE_CHOICES
