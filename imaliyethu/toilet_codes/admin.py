@@ -7,11 +7,12 @@ from imaliyethu.toilet_codes.models import ToiletCode
 
 class ToiletCodeAdmin(admin.ModelAdmin):
     list_display = (
-        'code', 'lat', 'lon',
+        'code', 'section', 'cluster', 'section_number', 'toilet_type',
+        'lat', 'lon',
     )
 
     search_fields = (
-        'code',
+        'code', 'section', 'toilet_type',
     )
 
 
