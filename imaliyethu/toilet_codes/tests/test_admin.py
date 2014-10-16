@@ -91,3 +91,29 @@ class TestToiletCodeAdmin(TestCase):
         self.assertEqual(code2.toilet_type, "FT")
         self.assertEqual(code2.lat, 3.3)
         self.assertEqual(code2.lon, -4.4)
+
+    def test_import_csv_update(self):
+        create_code("RR2")
+        csv_name = self.make_csv([
+            "Code,Section,Cluster,Number,Type,GPS Latitude,GPS Longitude",
+            "RR2,RR,2,1,FT,N3.3,W4.4",
+        ])
+        csv_format = self.import_formats['csv']
+        self.client.login(username='test', password='test_pw')
+        request = self.client.post(
+            reverse('admin:toilet_codes_toiletcode_process_import'),
+            data={
+                'input_format': str(csv_format.idx),
+                'import_file_name': csv_name,
+            }
+        )
+        self.assertRedirects(request, '/admin/toilet_codes/toiletcode/')
+        [code] = ToiletCode.objects.all().order_by('code')
+
+        self.assertEqual(code.code, "RR2")
+        self.assertEqual(code.section, "RR")
+        self.assertEqual(code.cluster, "2")
+        self.assertEqual(code.section_number, "1")
+        self.assertEqual(code.toilet_type, "FT")
+        self.assertEqual(code.lat, 3.3)
+        self.assertEqual(code.lon, -4.4)
