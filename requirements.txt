@@ -2,6 +2,7 @@ Django<1.7
 South
 djangorestframework
 django-ordered-model
+django-import-export
 gunicorn
 raven
 nose

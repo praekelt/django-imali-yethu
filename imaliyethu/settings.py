@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'rest_framework',
     'ordered_model',
+    'import_export',
     'imaliyethu.toilet_issues',
     'imaliyethu.toilet_codes',
     'snappybouncer',
