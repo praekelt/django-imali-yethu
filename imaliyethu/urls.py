@@ -11,6 +11,7 @@ urlpatterns = patterns(
     url(r'^toilet_codes/', include('imaliyethu.toilet_codes.urls')),
     url(r'^api-auth/', include(
         'rest_framework.urls', namespace='rest_framework')),
-    url(r'^snappy/', include(
-        'snappybouncer.urls', namespace='snappybouncer')),
+    # TastyPie breaks if a namespace is set. See
+    # https://github.com/toastdriven/django-tastypie/issues/24
+    url(r'^snappy/', include('snappybouncer.urls')),
 )
