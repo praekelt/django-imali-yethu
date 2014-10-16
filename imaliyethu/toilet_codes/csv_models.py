@@ -28,7 +28,10 @@ class GPSField(fields.Field):
             raise ValueError("gps_type must be either lat or lon.")
 
     def clean(self, data):
-        match = self.PATTERN.match(data)
+        value = data.get(self.column_name)
+        if value is None:
+            return None
+        match = self.PATTERN.match(value)
         if match is None:
             return 0.0
         groups = match.groupdict()
@@ -37,6 +40,8 @@ class GPSField(fields.Field):
 
     def export(self, obj):
         value = self.get_value(obj)
+        if value is None:
+            return value
         direction = self._pos_dir if (value >= 0) else self._neg_dir
         gps = "%s%g" % (direction, math.fabs(value))
         return gps
