@@ -42,3 +42,9 @@ class ApiRootTests(TestCase):
     def test_page_exists(self):
         response = self.client.get(reverse('api_root'))
         self.assertIsNotNone(response)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'admin')
+        self.assertContains(response, 'api-auth')
+        self.assertContains(response, 'toilet_codes')
+        self.assertContains(response, 'toilet_issues')
+        self.assertContains(response, 'snappy_bouncer')
