@@ -58,22 +58,26 @@ class TestToiletCodeAdmin(TestCase):
             "RR2,RR,2,1,FT,N3.3,W4.4",
         ]) + "\r\n")
 
-    def test_import_csv(self):
-        csv_name = self.make_csv([
-            "Code,Section,Cluster,Number,Type,GPS Latitude,GPS Longitude",
-            "RR1,,,,,S1.1,E2.2",
-            "RR2,RR,2,1,FT,N3.3,W4.4",
-        ])
+    def do_import(self, lines):
+        csv_name = self.make_csv(lines)
         csv_format = self.import_formats['csv']
         self.client.login(username='test', password='test_pw')
-        request = self.client.post(
+        response = self.client.post(
             reverse('admin:toilet_codes_toiletcode_process_import'),
             data={
                 'input_format': str(csv_format.idx),
                 'import_file_name': csv_name,
             }
         )
-        self.assertRedirects(request, '/admin/toilet_codes/toiletcode/')
+        self.assertRedirects(response, '/admin/toilet_codes/toiletcode/')
+
+    def test_import_csv(self):
+        self.do_import([
+            "Code,Section,Cluster,Number,Type,GPS Latitude,GPS Longitude",
+            "RR1,,,,,S1.1,E2.2",
+            "RR2,RR,2,1,FT,N3.3,W4.4",
+        ])
+
         [code1, code2] = ToiletCode.objects.all().order_by('code')
 
         self.assertEqual(code1.code, "RR1")
@@ -94,20 +98,11 @@ class TestToiletCodeAdmin(TestCase):
 
     def test_import_csv_update(self):
         create_code("RR2")
-        csv_name = self.make_csv([
+        self.do_import([
             "Code,Section,Cluster,Number,Type,GPS Latitude,GPS Longitude",
             "RR2,RR,2,1,FT,N3.3,W4.4",
         ])
-        csv_format = self.import_formats['csv']
-        self.client.login(username='test', password='test_pw')
-        request = self.client.post(
-            reverse('admin:toilet_codes_toiletcode_process_import'),
-            data={
-                'input_format': str(csv_format.idx),
-                'import_file_name': csv_name,
-            }
-        )
-        self.assertRedirects(request, '/admin/toilet_codes/toiletcode/')
+
         [code] = ToiletCode.objects.all().order_by('code')
 
         self.assertEqual(code.code, "RR2")
