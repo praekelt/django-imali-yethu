@@ -65,6 +65,14 @@ class TestToiletCodeAdmin(TestCase):
             "RR2,RR,2,1,FT,N3.3,W4.4",
         ])
 
+    def test_export_csv_high_precision_lat_lon(self):
+        create_code("RR1", lat=-1.12345678190123, lon=2.1234567890123)
+        csv = self.do_export()
+        self.assert_export(csv, [
+            "Code,Section,Cluster,Number,Type,GPS Latitude,GPS Longitude",
+            "RR1,,,,,S1.12345678190123,E2.1234567890123",
+        ])
+
     def do_import(self, lines):
         csv_name = self.make_csv(lines)
         csv_format = self.import_formats['csv']

@@ -46,7 +46,9 @@ class GPSField(fields.Field):
         if value is None:
             return value
         direction = self._pos_dir if (value >= 0) else self._neg_dir
-        gps = "%s%g" % (direction, math.fabs(value))
+        # 15 decimal places is the maximum useful precision shared between
+        # decimal and IEEE floating point representations
+        gps = "%s%.15g" % (direction, math.fabs(value))
         return gps
 
 
