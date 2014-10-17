@@ -12,11 +12,12 @@ class ToiletCodeAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = ToiletCodeResource
 
     list_display = (
-        'code', 'lat', 'lon',
+        'code', 'section', 'cluster', 'section_number', 'toilet_type',
+        'lat', 'lon',
     )
 
     search_fields = (
-        'code',
+        'code', 'section', 'toilet_type',
     )
 
 
