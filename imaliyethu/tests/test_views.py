@@ -33,3 +33,18 @@ class SnappyViewTests(ResourceTestCase):
         data = self.deserialize(response)
         self.assertEqual(data['objects'], [])
         self.assertEqual(data['meta']['total_count'], 0)
+
+
+class ApiRootTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_page_exists(self):
+        response = self.client.get(reverse('api_root'))
+        self.assertIsNotNone(response)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'admin')
+        self.assertContains(response, 'api-auth')
+        self.assertContains(response, 'toilet_codes')
+        self.assertContains(response, 'toilet_issues')
+        self.assertContains(response, 'snappy_bouncer')
