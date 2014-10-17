@@ -11,8 +11,9 @@ from imaliyethu.toilet_codes.models import ToiletCode
 
 class GPSField(fields.Field):
     PATTERN = re.compile(r"""
-        ^\s*^(?P<direction>[NEWS]?)
-        \s*(?P<int>\d+)[.,](?P<frac>\d+)$
+        ^(?P<direction>[NEWS])
+        \s*(?P<int>\d+)?
+        ([.,](?P<frac>\d+))?$
     """, re.VERBOSE)
 
     def __init__(self, gps_type, **kw):
@@ -31,12 +32,14 @@ class GPSField(fields.Field):
         value = data.get(self.column_name)
         if value is None:
             return None
-        match = self.PATTERN.match(value)
+        match = self.PATTERN.match(value.strip())
         if match is None:
             return 0.0
         groups = match.groupdict()
         sign = -1.0 if (groups["direction"] == self._neg_dir) else 1.0
-        return sign * float(groups["int"] + "." + groups["frac"])
+        int_part = groups["int"] or "0"
+        frac_part = groups["frac"] or "0"
+        return sign * float("%s.%s" % (int_part, frac_part))
 
     def export(self, obj):
         value = self.get_value(obj)

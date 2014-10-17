@@ -112,3 +112,36 @@ class TestToiletCodeAdmin(TestCase):
         self.assertEqual(code.toilet_type, "FT")
         self.assertEqual(code.lat, 3.3)
         self.assertEqual(code.lon, -4.4)
+
+    def test_import_csv_integer_lat_lon(self):
+        self.do_import([
+            "Code,Section,Cluster,Number,Type,GPS Latitude,GPS Longitude",
+            "RR2,RR,2,1,FT,N3,W4",
+        ])
+
+        [code] = ToiletCode.objects.all().order_by('code')
+
+        self.assertEqual(code.lat, 3)
+        self.assertEqual(code.lon, -4)
+
+    def test_import_csv_fractional_lat_lon(self):
+        self.do_import([
+            "Code,Section,Cluster,Number,Type,GPS Latitude,GPS Longitude",
+            "RR2,RR,2,1,FT,N.2,W.3",
+        ])
+
+        [code] = ToiletCode.objects.all().order_by('code')
+
+        self.assertEqual(code.lat, 0.2)
+        self.assertEqual(code.lon, -0.3)
+
+    def test_import_csv_whitespace_lat_lon(self):
+        self.do_import([
+            "Code,Section,Cluster,Number,Type,GPS Latitude,GPS Longitude",
+            "RR2,RR,2,1,FT, N1.2 , W1.3 ",
+        ])
+
+        [code] = ToiletCode.objects.all().order_by('code')
+
+        self.assertEqual(code.lat, 1.2)
+        self.assertEqual(code.lon, -1.3)
