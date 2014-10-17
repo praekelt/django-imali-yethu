@@ -45,18 +45,25 @@ class TestToiletCodeAdmin(TestCase):
         self._tmp_csv.append(csv_file.name)
         return os.path.basename(csv_file.name)
 
+    def do_export(self):
+        csv_format = self.export_formats['csv']
+        csv = self.code_admin.get_export_data(
+            csv_format, ToiletCode.objects.all())
+        return csv
+
+    def assert_export(self, csv, lines):
+        self.assertEqual(csv, "\r\n".join(lines) + "\r\n")
+
     def test_export_csv(self):
         create_code("RR1", lat=-1.1, lon=2.2)
         create_code("RR2", lat=3.3, lon=-4.4, section='RR', section_number='1',
                     cluster='2', toilet_type='FT')
-        csv_format = self.export_formats['csv']
-        csv = self.code_admin.get_export_data(
-            csv_format, ToiletCode.objects.all())
-        self.assertEqual(csv, "\r\n".join([
+        csv = self.do_export()
+        self.assert_export(csv, [
             "Code,Section,Cluster,Number,Type,GPS Latitude,GPS Longitude",
             "RR1,,,,,S1.1,E2.2",
             "RR2,RR,2,1,FT,N3.3,W4.4",
-        ]) + "\r\n")
+        ])
 
     def do_import(self, lines):
         csv_name = self.make_csv(lines)
