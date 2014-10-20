@@ -13,5 +13,5 @@ class ApiRoot(APIView):
             'api-auth': reverse('rest_framework:login', request=request),
             'toilet_codes': reverse('toilet_codes_list', request=request),
             'toilet_issues': reverse('toilet_issues_list', request=request),
-            #'snappy_bouncer': reverse('snappybouncer', request=request),
+            # 'snappy_bouncer': reverse('snappybouncer', request=request),
             })
