@@ -15,5 +15,5 @@ django-debug-toolbar
 django-celery
 django-celery-email
 dj-database-url
-django-snappy-vumi-bouncer
+django-snappy-vumi-bouncer>=0.2
 flake8
